@@ -19,15 +19,15 @@ public class CameraFollow : MonoBehaviour {
 
 	void Update () {
 		
-		#region CameraPosition Move.
+#region CameraPosition Move.
 		Vector3 currentV = transform.position;
 		float resultX = target.position.x;
 		float resultY = target.position.y + height;
 		float resultZ = target.position.z - distance;
 		nextCameraPosition = Vector3.Lerp (currentV, new Vector3 (resultX, resultY, resultZ), smooth * Time.deltaTime);
-		#endregion
+#endregion
 
-		#region CameraRotation Move.
+#region CameraRotation Move.
 
 		float currentRX = transform.eulerAngles.x;
 		float currentRY = transform.eulerAngles.y;
@@ -41,7 +41,7 @@ public class CameraFollow : MonoBehaviour {
 		resultRotationY = Mathf.LerpAngle (currentRY, resultRotationY, smooth * Time.deltaTime);
 		resultRotationZ = Mathf.LerpAngle (currentRZ, resultRotationZ, smooth * Time.deltaTime);
 		nextCameraRotation = Quaternion.Euler (resultRotationX, resultRotationY, resultRotationZ);
-		#endregion
+#endregion
 
 		transform.position = nextCameraPosition;
 		transform.rotation = nextCameraRotation;

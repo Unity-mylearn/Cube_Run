@@ -14,7 +14,8 @@ public class CreateNextFloor : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.name == "Player") {
+		Debug.Log ("pengpeng");
+		if (other.name == "body") {
 			int i = Random.Range (0, FloorManager._instanceFloorManger.floors.Length - 1);
 			GameObject gb = GameObject.Instantiate (FloorManager._instanceFloorManger.floors [i],
 				new Vector3 (0, 0, FloorManager._instanceFloorManger.floorCount * 449), Quaternion.identity,
