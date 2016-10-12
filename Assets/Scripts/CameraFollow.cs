@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour {
 	[SerializeField]
 	private Transform target;
 
-	public float smooth = 0.5f;
+	public float smooth = 0.0f;
 	public bool isSmooth = true;
 
 	public float height = 6.0f;
@@ -17,8 +17,13 @@ public class CameraFollow : MonoBehaviour {
 	private Vector3 nextCameraPosition;
 	private Quaternion nextCameraRotation;
 
+	private PlayerContoller pp;
+
+	void Awake(){
+		pp = PlayerContoller._instance;
+	}
 	void Update () {
-		
+		smooth = Mathf.Tan(pp.speed / 10.0f);
 #region CameraPosition Move.
 		Vector3 currentV = transform.position;
 		float resultX = target.position.x;

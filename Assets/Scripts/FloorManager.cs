@@ -9,8 +9,9 @@ public class FloorManager : MonoBehaviour {
 	public Transform Parent;
 	public static List<GameObject> garbage = new List<GameObject>();
 
-	public int floorCount = 1;
+	public int floorCount = 0;
 	public static bool gameStart = false;
+
 	void Awake(){
 		_instanceFloorManger = this;
 	}
