@@ -99,11 +99,12 @@ public class PlayerContoller : MonoBehaviour {
 		currentX = transform.position.x;
 		currentY = transform.position.y;
 		currentZ = transform.position.z;
-		if (currentY <= 2.0f) {
+		if (player.position.y <= 0.5f) {
 			isJump = false;
 		}
-		transform.position = new Vector3 (currentX, currentY, currentZ + speed * Time.deltaTime * stepfar);
-	}
+
+        transform.position = new Vector3(currentX, currentY, currentZ + speed * Time.deltaTime * stepfar);
+    }
 
 	public void AnalyzeSwipe (Vector2 start, Vector2 end) {
 		if (Vector2.Distance (start, end) < 0.1f) {
@@ -120,8 +121,9 @@ public class PlayerContoller : MonoBehaviour {
 		}
 
 		if (angle > 337.5 || angle <= 22.5) {
-//			Debug.Log ("down");
-			player.Translate(new Vector3(0,-stepfar,0));
+            //			Debug.Log ("down");
+            //player.Translate(new Vector3(0,-stepfar,0));
+            transform.Rotate(new Vector3(0, 90, 0));
 		} else if (angle > 22.5 && angle <= 67.5) {
 //			Debug.Log ("down-right");
 		} else if (angle > 67.5 && angle <= 112.5) {

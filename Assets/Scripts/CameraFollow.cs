@@ -23,7 +23,7 @@ public class CameraFollow : MonoBehaviour {
 		pp = PlayerContoller._instance;
 	}
 	void Update () {
-		smooth = Mathf.Tan(pp.speed / 10.0f);
+        smooth = pp.speed / 5.5f + pp.speed / 100.0f *2;
 #region CameraPosition Move.
 		Vector3 currentV = transform.position;
 		float resultX = target.position.x;
