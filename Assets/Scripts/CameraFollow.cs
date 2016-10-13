@@ -26,10 +26,22 @@ public class CameraFollow : MonoBehaviour {
         smooth = pp.speed / 5.5f + pp.speed / 100.0f *2;
 #region CameraPosition Move.
 		Vector3 currentV = transform.position;
-		float resultX = target.position.x;
-		float resultY = target.position.y + height;
-		float resultZ = target.position.z - distance;
+
+		float resultX;
+		float resultY;
+		float resultZ;
+
+		if(target.eulerAngles.y >= 30.0f || target.eulerAngles.y <= -30.0f){
+			resultX = target.position.x;
+			resultY = target.position.y + height;
+			resultZ = target.position.z;
+		}else{
+			resultX = target.position.x;
+			resultY = target.position.y + height;
+			resultZ = target.position.z - distance;
+		}
 		nextCameraPosition = Vector3.Lerp (currentV, new Vector3 (resultX, resultY, resultZ), smooth * Time.deltaTime);
+
 #endregion
 
 #region CameraRotation Move.

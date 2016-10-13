@@ -50,6 +50,9 @@ public class PlayerContoller : MonoBehaviour {
 	private float currentY;
 	private float currentZ;
 
+
+	private float currentRotateion = 0.0f;
+
 	private float speedUpBeginTime = 0.0f;
 	private float speedUpLastTime = 0.1f;
 
@@ -92,18 +95,25 @@ public class PlayerContoller : MonoBehaviour {
 			}
 			AnalyzeSwipe (beginPosition, endPosition);
 		}
+
+
 		UpdateTime ();
 		if (speedUpLastTime - speedUpBeginTime >= SpeedAddRate) {
 			UpdateSpeed (SpeedUpVar);
 		}
-		currentX = transform.position.x;
-		currentY = transform.position.y;
-		currentZ = transform.position.z;
+		UpdateEnergy ();
+
+
+		currentX = player.position.x;
+		currentY = player.position.y;
+		currentZ = player.position.z;
 		if (player.position.y <= 0.5f) {
 			isJump = false;
 		}
 
-        transform.position = new Vector3(currentX, currentY, currentZ + speed * Time.deltaTime * stepfar);
+//		player.position = new Vector3(currentX, currentY, currentZ + speed * Time.deltaTime * stepfar);
+
+		player.Translate (Vector3.forward * speed * Time.deltaTime * stepfar);
     }
 
 	public void AnalyzeSwipe (Vector2 start, Vector2 end) {
@@ -123,7 +133,7 @@ public class PlayerContoller : MonoBehaviour {
 		if (angle > 337.5 || angle <= 22.5) {
             //			Debug.Log ("down");
             //player.Translate(new Vector3(0,-stepfar,0));
-            transform.Rotate(new Vector3(0, 90, 0));
+			player.localEulerAngles = new Vector3(0, currentRotateion += 90.0f, 0);
 		} else if (angle > 22.5 && angle <= 67.5) {
 //			Debug.Log ("down-right");
 		} else if (angle > 67.5 && angle <= 112.5) {
@@ -133,6 +143,7 @@ public class PlayerContoller : MonoBehaviour {
 //			Debug.Log ("up-right");
 		} else if (angle > 157.5 && angle <= 202.5) {
 //			Debug.Log ("up");
+			player.localEulerAngles = new Vector3(0, currentRotateion -= 90.0f, 0);
 		} else if (angle > 202.5 && angle <= 247.5) {
 //			Debug.Log ("up-left");
 		} else if (angle > 247.5 && angle <= 292.5) {
@@ -170,7 +181,7 @@ public class PlayerContoller : MonoBehaviour {
 	public void UpdateSpeed(float value){
 //		Debug.LogFormat ("Speed Up {0}.", value);
 		speedUpBeginTime = currentTime;
-		if (speed >= 200) {
+		if (speed >= 50) {
 				
 		} else {
 			speed += value;
@@ -182,5 +193,21 @@ public class PlayerContoller : MonoBehaviour {
 		currentTime += Time.deltaTime;
 		speedUpLastTime = currentTime;
 		time_text.text = currentTime.ToString ();
+	}
+
+	public void UpdateEnergy(){
+		if (currentEnergy <= 0) {
+			isDie = true;
+			return;
+		}
+		currentEnergy -= speed / 50.0f;
+		energy_slider.value = currentEnergy;
+	}
+
+	public void OnTriggerEnter(Collider other){
+		if (other.name == "energy") {
+			
+			currentEnergy += 100.0f - currentEnergy;
+		}
 	}
 }
