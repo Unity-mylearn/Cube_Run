@@ -59,7 +59,7 @@ public class PlayerContoller : MonoBehaviour {
 
 	void Awake(){
 		_instance = this;
-		speed = 10;
+		speed = 1;
 		currentTime = 0.0f;
 		currentBlood = 100;
 		currentEnergy = 100;
@@ -89,7 +89,7 @@ public class PlayerContoller : MonoBehaviour {
 			endPosition = Input.mousePosition;
 
 			if (Vector3.Distance (beginPosition, endPosition) < 0.1f && !isJump) {
-//				Debug.Log ("Player jump");
+				Debug.Log ("Player jump");
 				isJump = true;
 				GetComponentInChildren<Rigidbody> ().AddForce (transform.up * Thust);
 			}
@@ -107,7 +107,7 @@ public class PlayerContoller : MonoBehaviour {
 		currentX = player.position.x;
 		currentY = player.position.y;
 		currentZ = player.position.z;
-		if (player.position.y <= 0.5f) {
+		if (player.position.y <= 0.19f) {
 			isJump = false;
 		}
 
@@ -181,7 +181,7 @@ public class PlayerContoller : MonoBehaviour {
 	public void UpdateSpeed(float value){
 //		Debug.LogFormat ("Speed Up {0}.", value);
 		speedUpBeginTime = currentTime;
-		if (speed >= 50) {
+		if (speed >= 10) {
 				
 		} else {
 			speed += value;
@@ -205,9 +205,13 @@ public class PlayerContoller : MonoBehaviour {
 	}
 
 	public void OnTriggerEnter(Collider other){
-		if (other.name == "energy") {
-			
+		if (other.name == "Food") {
+			Destroy (other.gameObject);
 			currentEnergy += 100.0f - currentEnergy;
+		}
+		if (other.name == "Block") {
+			currentBlood -= 20.0f;
+			blood_slider.value = currentBlood;
 		}
 	}
 }
